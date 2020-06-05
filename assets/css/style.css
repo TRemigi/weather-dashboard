@@ -9,6 +9,16 @@ header {
     padding: 5px;
 }
 
+#weather-today {
+    display: none;
+    padding-bottom: 20px;
+}
+
 .card-title, .card-text {
     padding: 5px;
+    font-weight: normal;
+}
+
+.uv-span {
+    padding: 3px;
 }
