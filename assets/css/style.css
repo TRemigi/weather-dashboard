@@ -8,3 +8,7 @@ header {
 .search-card {
     padding: 5px;
 }
+
+.card-title, .card-text {
+    padding: 5px;
+}

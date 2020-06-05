@@ -16,7 +16,7 @@ var submitHandler = function(event) {
 
 var cityWeatherGetter = function(city) {
     // format the api
-    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=ca94ded639b01eb51cf633b5d0145205";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=ca94ded639b01eb51cf633b5d0145205";
     // make a request to the url
    fetch(apiUrl)
    .then(function(response) {
@@ -36,10 +36,29 @@ var cityWeatherGetter = function(city) {
 };
 
 var displayWeather = function(data) {
+    console.log(data);
+    // create title and icon
     var date = moment().format("L");
     var titleEl = document.createElement("h2");
+    titleEl.setAttribute("class", "card-title");
     titleEl.textContent = data.city.name + " " + date;
+    var iconSpan = document.createElement("span");
+    var weatherIcon = document.createElement("img");
+    var iconId = data.list[0].weather[0].icon;
+    weatherIcon.setAttribute("src", "http://openweathermap.org/img/wn/" +
+    iconId +
+    "@2x.png");
+    iconSpan.appendChild(weatherIcon);
+    titleEl.appendChild(iconSpan);
     weatherTodayEl.appendChild(titleEl);
-}
+    // create temperature <p>
+    var currentTemp = data.list[0].main.temp;
+    var tempEl = document.createElement("h4");
+    tempEl.textContent = "Temperature: " +
+    currentTemp +
+    " °F";
+    tempEl.setAttribute("class", "card-text");
+    weatherTodayEl.appendChild(tempEl);
+};
 
 citySubmitEl.addEventListener("click", submitHandler);
