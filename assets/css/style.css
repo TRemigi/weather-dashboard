@@ -9,6 +9,10 @@ header {
     padding: 5px;
 }
 
+.past-search {
+    text-align: left;
+}
+
 #weather-today {
     display: none;
     padding-bottom: 20px;

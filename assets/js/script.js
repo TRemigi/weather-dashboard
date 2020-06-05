@@ -1,6 +1,8 @@
+var pastSearchesEl = document.querySelector("#past-searches");
 var cityInputEl = document.querySelector("#city-input");
 var citySubmitEl = document.querySelector("#city-submit");
 var weatherTodayEl = document.querySelector("#weather-today");
+var searchHistory = [];
 
 var submitHandler = function (event) {
     event.preventDefault();
@@ -13,6 +15,12 @@ var submitHandler = function (event) {
     }
 };
 
+var pastSearchClickHandler = function (event) {
+    event.preventDefault();
+    var city = event.target.id;
+    cityWeatherGetter(city);
+};
+
 var cityWeatherGetter = function (city) {
     // format the api
     var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=ca94ded639b01eb51cf633b5d0145205";
@@ -22,8 +30,8 @@ var cityWeatherGetter = function (city) {
             // request was successful
             if (response.ok) {
                 response.json().then(function (data) {
-                    console.log(data);
-                    displayWeather(data, city);
+                    searchSaver(data);
+                    displayWeather(data);
                 });
             } else {
                 alert("Error: " + response.statusText);
@@ -113,4 +121,33 @@ var displayWeather = function (data) {
         });
 };
 
+var searchSaver = function (search) {
+    var cityName = search.city.name;
+    if (searchHistory.includes(cityName)) {
+        return;
+    } else {
+        searchHistory.push(cityName);
+        localStorage.setItem("search-history", JSON.stringify(searchHistory));
+        console.log(localStorage);
+        searchLoader();
+    }
+};
+
+var searchLoader = function () {
+    searchHistory = JSON.parse(localStorage.getItem("search-history"));
+    if (!searchHistory) {
+        searchHistory = [];
+    }
+    pastSearchesEl.innerHTML = "";
+    for (i = 0; i < searchHistory.length; i++) {
+        var searchButtonEl = document.createElement("button");
+        searchButtonEl.setAttribute("class", "btn btn-outline-secondary col-12 past-search");
+        searchButtonEl.setAttribute("id", searchHistory[i]);
+        searchButtonEl.textContent = searchHistory[i];
+        pastSearchesEl.appendChild(searchButtonEl);
+    }
+};
+
+searchLoader();
 citySubmitEl.addEventListener("click", submitHandler);
+pastSearchesEl.addEventListener("click", pastSearchClickHandler);
