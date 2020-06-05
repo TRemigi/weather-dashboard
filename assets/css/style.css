@@ -26,3 +26,7 @@ header {
 .uv-span {
     padding: 3px;
 }
+
+#weather-next-five {
+    margin: 0;
+}

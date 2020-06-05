@@ -2,6 +2,7 @@ var pastSearchesEl = document.querySelector("#past-searches");
 var cityInputEl = document.querySelector("#city-input");
 var citySubmitEl = document.querySelector("#city-submit");
 var weatherTodayEl = document.querySelector("#weather-today");
+var weatherNextFiveEl = document.querySelector("#weather-next-five");
 var searchHistory = [];
 
 var submitHandler = function (event) {
@@ -44,6 +45,7 @@ var cityWeatherGetter = function (city) {
 
 var displayWeather = function (data) {
     console.log(data);
+    fiveDayCardCreator(data);
     // create title and icon
     weatherTodayEl.style.display = "flex";
     weatherTodayEl.innerHTML = "";
@@ -147,6 +149,62 @@ var searchLoader = function () {
         pastSearchesEl.appendChild(searchButtonEl);
     }
 };
+
+var fiveDayCardCreator = function(data) {
+    weatherNextFiveEl.innerHTML = "";
+    var nextFiveTitle = document.createElement("h2");
+    nextFiveTitle.setAttribute("class", "col-12 text-left");
+    nextFiveTitle.textContent = "5-Day Forecast:"
+    weatherNextFiveEl.appendChild(nextFiveTitle);
+    var addDay = 1
+    for (i = 0; i < 5; i++) {
+        // create card and title
+        var fiveDayCard = document.createElement("div");
+        fiveDayCard.setAttribute("class", "card col-2 bg-primary text-white");
+        var date = moment().add(addDay, 'days').format("L");
+        nextDay = (addDay * 8);
+        var cardTitleEl = document.createElement("h5");
+        cardTitleEl.textContent = date;
+        cardTitleEl.setAttribute("class", "card-title");
+        fiveDayCard.appendChild(cardTitleEl);
+        // create icon
+        var weatherIcon = document.createElement("img");
+        if (i === 4) {
+            nextDay = (nextDay - 1);
+        };
+        var iconId = data.list[nextDay].weather[0].icon;
+        weatherIcon.setAttribute("src", "http://openweathermap.org/img/wn/" +
+        iconId +
+        "@2x.png");
+        fiveDayCard.appendChild(weatherIcon);
+        // create temp
+        
+        
+        weatherNextFiveEl.appendChild(fiveDayCard);
+        addDay++
+
+    };
+
+    // var titleEl = document.createElement("h2");
+    // titleEl.setAttribute("class", "card-title");
+    // titleEl.textContent = data.city.name + " " + date;
+    // weatherTodayEl.appendChild(titleEl);
+    // // create temperature
+    // var currentTemp = data.list[0].main.temp;
+    // var tempEl = document.createElement("h4");
+    // tempEl.textContent = "Temperature: " +
+    //     currentTemp +
+    //     " °F";
+    // tempEl.setAttribute("class", "card-text");
+    // weatherTodayEl.appendChild(tempEl);
+    // // create humidity
+    // var currentHumidity = data.list[0].main.humidity;
+    // var humidityEl = document.createElement("h4");
+    // humidityEl.textContent = "Humidity: " +
+    //     currentHumidity;
+    // humidityEl.setAttribute("class", "card-text");
+    // weatherTodayEl.appendChild(humidityEl);
+}
 
 searchLoader();
 citySubmitEl.addEventListener("click", submitHandler);
