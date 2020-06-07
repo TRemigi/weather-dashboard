@@ -4,24 +4,25 @@ var citySubmitEl = document.querySelector("#city-submit");
 var weatherTodayEl = document.querySelector("#weather-today");
 var weatherNextFiveEl = document.querySelector("#weather-next-five");
 var searchHistory = [];
-
+// function to handle search submission
 var submitHandler = function (event) {
     event.preventDefault();
     var city = cityInputEl.value.trim();
-
+    // check if valid city
     if (city) {
         cityWeatherGetter(city);
     } else {
         alert("Please enter a valid city name");
     }
+    cityInputEl.value = "";
 };
-
+// function to send button click to cityWeatherGetter function
 var pastSearchClickHandler = function (event) {
     event.preventDefault();
     var city = event.target.id;
     cityWeatherGetter(city);
 };
-
+// function to make fetch request with user submitted info
 var cityWeatherGetter = function (city) {
     // format the api
     var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=ca94ded639b01eb51cf633b5d0145205";
@@ -42,17 +43,18 @@ var cityWeatherGetter = function (city) {
             alert("Unable to connect");
         });
 };
-
+// function to create elements based on response data
 var displayWeather = function (data) {
-    console.log(data);
+    // send data to five day forecast function
     fiveDayCardCreator(data);
-    // create title and icon
+    // create title
     weatherTodayEl.style.display = "flex";
     weatherTodayEl.innerHTML = "";
     var date = moment().format("L");
     var titleEl = document.createElement("h2");
-    titleEl.setAttribute("class", "card-title");
+    titleEl.setAttribute("class", "card-title font-weight-bold");
     titleEl.textContent = data.city.name + " " + date;
+    // create icon
     var iconSpan = document.createElement("span");
     var weatherIcon = document.createElement("img");
     var iconId = data.list[0].weather[0].icon;
@@ -97,12 +99,12 @@ var displayWeather = function (data) {
                 response.json().then(function (data) {
                     var uvIndex = data.value;
                     // create uv index
-                    console.log(uvIndex);
                     var uvIndexEl = document.createElement("h4");
                     uvIndexEl.textContent = "UV Index: ";
                     uvIndexEl.setAttribute("class", "card-text");
                     var uvSpan = document.createElement("span");
                     uvSpan.textContent = uvIndex;
+                    // style uv index
                     if (uvIndex <= 2) {
                         uvSpan.setAttribute("class", "bg-success rounded uv-span");
                     }
@@ -123,30 +125,35 @@ var displayWeather = function (data) {
             alert("Unable to connect");
         });
 };
-
+// function to save new searches to search history
 var searchSaver = function (search) {
     var cityName = search.city.name;
+    // check for city in array and move to end of list
     if (searchHistory.includes(cityName)) {
-        return;
+        var remove = searchHistory.indexOf(cityName);
+        searchHistory.splice(remove, 1);
+        searchHistory.push(cityName);
+        localStorage.setItem("search-history", JSON.stringify(searchHistory));
+        searchLoader();        
     } else {
         searchHistory.push(cityName);
         localStorage.setItem("search-history", JSON.stringify(searchHistory));
-        console.log(localStorage);
         searchLoader();
     }
 };
-
+// function to create buttons for past searches
 var searchLoader = function () {
     searchHistory = JSON.parse(localStorage.getItem("search-history"));
     if (!searchHistory) {
         searchHistory = [];
     }
+    // reset section HTML
     pastSearchesEl.innerHTML = "";
+    // create button for each
     for (i = 0; i < searchHistory.length; i++) {
         var searchButtonEl = document.createElement("button");
         var notRecent = searchHistory.length - 3;
-        console.log(notRecent);
-        console.log(i);
+        // only display three most recent buttons on smaller screen sizes
         if (i < notRecent) {
             searchButtonEl.setAttribute("class", "btn btn-outline-secondary col-12 d-none d-md-inline-block past-search");
         } else {
@@ -157,16 +164,21 @@ var searchLoader = function () {
         pastSearchesEl.appendChild(searchButtonEl);
     }
 };
-
+// function to create five day forecast cards
 var fiveDayCardCreator = function (data) {
+    // reset section HTML
     weatherNextFiveEl.innerHTML = "";
+    // create section title
     var nextFiveTitle = document.createElement("h2");
     nextFiveTitle.setAttribute("class", "col-12 text-left");
     nextFiveTitle.style.paddingLeft = 0;
     nextFiveTitle.textContent = "5-Day Forecast:"
     weatherNextFiveEl.appendChild(nextFiveTitle);
+    // create cards for each day
     for (i = 0; i < data.list.length; i++) {
+        // check for time of day in response object
         var timeOfDay = data.list[i].dt_txt.split(" ")[1];
+        // create card with data for time of 12 pm
         if (timeOfDay === "12:00:00") {
             // create card
             var fiveDayCard = document.createElement("div");
@@ -211,7 +223,9 @@ var fiveDayCardCreator = function (data) {
         }
     }
 };
-
+// load past searches
 searchLoader();
+// listen for search submission
 citySubmitEl.addEventListener("click", submitHandler);
+// listen for clicks on past search buttons
 pastSearchesEl.addEventListener("click", pastSearchClickHandler);
