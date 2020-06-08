@@ -57,7 +57,7 @@ var displayWeather = function (data) {
     var iconSpan = document.createElement("span");
     var weatherIcon = document.createElement("img");
     var iconId = data.list[0].weather[0].icon;
-    weatherIcon.setAttribute("src", "http://openweathermap.org/img/wn/" +
+    weatherIcon.setAttribute("src", "https://openweathermap.org/img/wn/" +
         iconId +
         "@2x.png");
     iconSpan.appendChild(weatherIcon);
@@ -94,7 +94,7 @@ var displayWeather = function (data) {
     fiveDayCardCreator(data);
     uvIndexHandler(lat, lon);
     // fetch uv index
-    // var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
+    // var uvApiUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
     // fetch(uvApiUrl)
     //     .then(function (response) {
     //         // request was successful
@@ -234,7 +234,7 @@ var fiveDayCardCreator = function (data) {
             // create icon
             var weatherIconEl = document.createElement("img");
             var iconId = data.list[i].weather[0].icon;
-            weatherIconEl.setAttribute("src", "http://openweathermap.org/img/wn/" +
+            weatherIconEl.setAttribute("src", "https://openweathermap.org/img/wn/" +
                 iconId +
                 "@2x.png");
             weatherIconEl.setAttribute("width", "60px");
