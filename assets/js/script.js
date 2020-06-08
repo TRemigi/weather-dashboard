@@ -52,7 +52,7 @@ var displayWeather = function (data) {
     var date = moment().format("L");
     var titleEl = document.createElement("h2");
     titleEl.setAttribute("class", "card-title font-weight-bold");
-    titleEl.textContent = data.city.name + " " + date;
+    titleEl.textContent = data.city.name + " " + "(" + date + ")";
     // create icon
     var iconSpan = document.createElement("span");
     var weatherIcon = document.createElement("img");
@@ -195,7 +195,7 @@ var fiveDayCardCreator = function (data) {
             var formattedDate = moment(date).format("L");
             var cardTitleEl = document.createElement("h5");
             cardTitleEl.textContent = formattedDate;
-            cardTitleEl.setAttribute("class", "card-title");
+            cardTitleEl.setAttribute("class", "card-title font-weight-bold");
             fiveDayCard.appendChild(cardTitleEl);
             // create icon
             var weatherIconEl = document.createElement("img");
