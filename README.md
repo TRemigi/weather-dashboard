@@ -1,6 +1,6 @@
 # Weather Dashboard
 
-https://tremigi.github.io/weather-dashboard/
+https://tremigi.github.io/weather-dashboard
 
 The weather dashboard is a school project completed created by Taylor Remigi. It allows a user to search the weather by city name, and returns information for the current temperature, windspeed, humidity, and uv index. Additionally, users can view the temperature and humidity levels for the next five days for the city they are currently viewing.
 
