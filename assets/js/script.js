@@ -45,8 +45,7 @@ var cityWeatherGetter = function (city) {
 };
 // function to create elements based on response data
 var displayWeather = function (data) {
-    // send data to five day forecast function
-    fiveDayCardCreator(data);
+    
     // create title
     weatherTodayEl.style.display = "flex";
     weatherTodayEl.innerHTML = "";
@@ -88,6 +87,8 @@ var displayWeather = function (data) {
         " MPH";
     windspeedEl.setAttribute("class", "card-text");
     weatherTodayEl.appendChild(windspeedEl);
+    // send data to five day forecast function
+    fiveDayCardCreator(data);
     // fetch uv index
     var lat = data.city.coord.lat;
     var lon = data.city.coord.lon;
@@ -217,11 +218,11 @@ var fiveDayCardCreator = function (data) {
                 "%";
             // append to card
             fiveDayCard.appendChild(humidityEl);
-
             // append card to div
             weatherNextFiveEl.appendChild(fiveDayCard);
         }
     }
+    return;
 };
 // load past searches
 searchLoader();
