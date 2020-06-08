@@ -93,40 +93,6 @@ var displayWeather = function (data) {
     // send data to five day forecast function
     fiveDayCardCreator(data);
     uvIndexHandler(lat, lon);
-    // fetch uv index
-    // var uvApiUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
-    // fetch(uvApiUrl)
-    //     .then(function (response) {
-    //         // request was successful
-    //         if (response.ok) {
-    //             response.json().then(function (data) {
-    //                 var uvIndex = data.value;
-    //                 // create uv index
-    //                 var uvIndexEl = document.createElement("h4");
-    //                 uvIndexEl.textContent = "UV Index: ";
-    //                 uvIndexEl.setAttribute("class", "card-text");
-    //                 var uvSpan = document.createElement("span");
-    //                 uvSpan.textContent = uvIndex;
-    //                 // style uv index
-    //                 if (uvIndex <= 2) {
-    //                     uvSpan.setAttribute("class", "bg-success rounded uv-span");
-    //                 }
-    //                 if (uvIndex >= 8) {
-    //                     uvSpan.setAttribute("class", "bg-danger rounded uv-span");
-    //                 } else {
-    //                     uvSpan.setAttribute("class", "bg-warning rounded uv-span");
-    //                 }
-    //                 uvIndexEl.appendChild(uvSpan);
-    //                 weatherTodayEl.appendChild(uvIndexEl);
-
-    //             });
-    //         } else {
-    //             alert("Error: " + response.statusText);
-    //         }
-    //     })
-    //     .catch(function (error) {
-    //         alert("Unable to connect");
-    //     });
 };
 
 var uvIndexHandler = function (lat, lon) {
