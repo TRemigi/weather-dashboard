@@ -94,7 +94,7 @@ var displayWeather = function (data) {
     fiveDayCardCreator(data);
     // fetch uv index
     var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
-    return fetch(uvApiUrl)
+    fetch(uvApiUrl)
         .then(function (response) {
             // request was successful
             if (response.ok) {
