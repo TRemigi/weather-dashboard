@@ -45,7 +45,7 @@ var cityWeatherGetter = function (city) {
 };
 // function to create elements based on response data
 var displayWeather = function (data) {
-    
+
     // create title
     weatherTodayEl.style.display = "flex";
     weatherTodayEl.innerHTML = "";
@@ -92,6 +92,44 @@ var displayWeather = function (data) {
     var lon = data.city.coord.lon;
     // send data to five day forecast function
     fiveDayCardCreator(data);
+    uvIndexHandler(lat, lon);
+    // fetch uv index
+    // var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
+    // fetch(uvApiUrl)
+    //     .then(function (response) {
+    //         // request was successful
+    //         if (response.ok) {
+    //             response.json().then(function (data) {
+    //                 var uvIndex = data.value;
+    //                 // create uv index
+    //                 var uvIndexEl = document.createElement("h4");
+    //                 uvIndexEl.textContent = "UV Index: ";
+    //                 uvIndexEl.setAttribute("class", "card-text");
+    //                 var uvSpan = document.createElement("span");
+    //                 uvSpan.textContent = uvIndex;
+    //                 // style uv index
+    //                 if (uvIndex <= 2) {
+    //                     uvSpan.setAttribute("class", "bg-success rounded uv-span");
+    //                 }
+    //                 if (uvIndex >= 8) {
+    //                     uvSpan.setAttribute("class", "bg-danger rounded uv-span");
+    //                 } else {
+    //                     uvSpan.setAttribute("class", "bg-warning rounded uv-span");
+    //                 }
+    //                 uvIndexEl.appendChild(uvSpan);
+    //                 weatherTodayEl.appendChild(uvIndexEl);
+
+    //             });
+    //         } else {
+    //             alert("Error: " + response.statusText);
+    //         }
+    //     })
+    //     .catch(function (error) {
+    //         alert("Unable to connect");
+    //     });
+};
+
+var uvIndexHandler = function (lat, lon) {
     // fetch uv index
     var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
     fetch(uvApiUrl)
@@ -127,6 +165,7 @@ var displayWeather = function (data) {
             alert("Unable to connect");
         });
 };
+
 // function to save new searches to search history
 var searchSaver = function (search) {
     var cityName = search.city.name;
@@ -136,7 +175,7 @@ var searchSaver = function (search) {
         searchHistory.splice(remove, 1);
         searchHistory.push(cityName);
         localStorage.setItem("search-history", JSON.stringify(searchHistory));
-        searchLoader();        
+        searchLoader();
     } else {
         searchHistory.push(cityName);
         localStorage.setItem("search-history", JSON.stringify(searchHistory));
