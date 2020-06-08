@@ -87,11 +87,12 @@ var displayWeather = function (data) {
         " MPH";
     windspeedEl.setAttribute("class", "card-text");
     weatherTodayEl.appendChild(windspeedEl);
+    // save lat and lon for fetching uv index
+    var lat = data.city.coord.lat;
+    var lon = data.city.coord.lon;
     // send data to five day forecast function
     fiveDayCardCreator(data);
     // fetch uv index
-    var lat = data.city.coord.lat;
-    var lon = data.city.coord.lon;
     var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
     return fetch(uvApiUrl)
         .then(function (response) {
