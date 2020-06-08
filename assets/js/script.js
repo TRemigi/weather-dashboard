@@ -177,7 +177,7 @@ var fiveDayCardCreator = function (data) {
     weatherNextFiveEl.innerHTML = "";
     // create section title
     var nextFiveTitle = document.createElement("h2");
-    nextFiveTitle.setAttribute("class", "col-12 text-left");
+    nextFiveTitle.setAttribute("class", "col-12 text-left mt-3");
     nextFiveTitle.style.paddingLeft = 0;
     nextFiveTitle.textContent = "5-Day Forecast:"
     weatherNextFiveEl.appendChild(nextFiveTitle);
@@ -189,7 +189,7 @@ var fiveDayCardCreator = function (data) {
         if (timeOfDay === "12:00:00") {
             // create card
             var fiveDayCard = document.createElement("div");
-            fiveDayCard.setAttribute("class", "card col-12 col-md-6 col-lg-2 bg-primary text-white");
+            fiveDayCard.setAttribute("class", "card col-12 col-md-6 col-lg-2 mb-1 bg-primary text-white");
             // create card title
             var date = data.list[i].dt_txt.split(" ")[0];
             var formattedDate = moment(date).format("L");
