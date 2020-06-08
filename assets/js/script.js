@@ -131,7 +131,7 @@ var displayWeather = function (data) {
 
 var uvIndexHandler = function (lat, lon) {
     // fetch uv index
-    var uvApiUrl = "http://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
+    var uvApiUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=ca94ded639b01eb51cf633b5d0145205&lat=" + lat + "&lon=" + lon;
     fetch(uvApiUrl)
         .then(function (response) {
             // request was successful
